@@ -1,10 +1,10 @@
-package User;
+package src.User;
 
-public class User {
+public class Customer {
     private String username;
     private String personalInfo;
 
-    public User(String username, String personalInfo) {
+    public Customer(String username, String personalInfo) {
         this.username = username;
         this.personalInfo = personalInfo;
     }

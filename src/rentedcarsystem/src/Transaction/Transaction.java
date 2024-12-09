@@ -1,4 +1,4 @@
-package Transaction;
+package src.Transaction;
 
 public class Transaction {
     private double amount;

@@ -1,4 +1,4 @@
-package Admins;
+package src.Admins;
 
 import java.util.List;
 
@@ -21,22 +21,22 @@ public class Admins {
     }
 
     // Phương thức Thêm, Xóa người dùng
-    public void addUser(User user) {
+    public void addUser(Customer user) {
         // Thêm người dùng vào hệ thống (chưa triển khai chi tiết)
         System.out.println("Đã thêm người dùng: " + user.getUsername());
     }
 
-    public void removeUser(User user) {
+    public void removeUser(Customer user) {
         // Xóa người dùng khỏi hệ thống (chưa triển khai chi tiết)
         System.out.println("Đã xóa người dùng: " + user.getUsername());
     }
 
-    public void updateUserInformation(User user, String newInfo) {
+    public void updateUserInformation(Customer user, String newInfo) {
         // Cập nhật thông tin người dùng (chưa triển khai chi tiết)
         System.out.println("Cập nhật thông tin người dùng: " + user.getUsername() + " với thông tin mới: " + newInfo);
     }
 
-    public void blockUserAccount(User user) {
+    public void blockUserAccount(Customer user) {
         // Vô hiệu hóa tài khoản người dùng
         System.out.println("Tài khoản người dùng " + user.getUsername() + " đã bị vô hiệu hóa.");
     }
@@ -53,30 +53,30 @@ public class Admins {
     }
 
     // Phương thức Chat với người dùng
-    public void respondToCustomer(User user, String message) {
+    public void respondToCustomer(Customer user, String message) {
         // Trả lời câu hỏi thắc mắc của khách hàng qua chat
         System.out.println("Admin trả lời cho người dùng " + user.getUsername() + ": " + message);
     }
 
-    public void viewChatHistory(User user) {
+    public void viewChatHistory(Customer user) {
         // Xem lịch sử trò chuyện với khách hàng
         System.out.println("Lịch sử trò chuyện với người dùng: " + user.getUsername());
         // (Giả lập lịch sử trò chuyện)
     }
 
     // Phương thức Kiểm tra thông tin khách hàng
-    public void checkCustomerInformation(User user) {
+    public void checkCustomerInformation(Customer user) {
         // Kiểm tra các thông tin cá nhân của khách hàng
         System.out.println("Thông tin khách hàng " + user.getUsername() + ": " + user.getPersonalInfo());
     }
 
-    public void viewCustomerTransactionHistory(User user) {
+    public void viewCustomerTransactionHistory(Customer user) {
         // Xem lịch sử giao dịch của khách hàng
         System.out.println("Lịch sử giao dịch của khách hàng " + user.getUsername());
         // (Giả lập lịch sử giao dịch)
     }
 
-    public void viewCustomerFeedback(User user) {
+    public void viewCustomerFeedback(Customer user) {
         // Xem các đánh giá hoặc phản hồi của khách hàng
         System.out.println("Đánh giá của khách hàng " + user.getUsername());
         // (Giả lập phản hồi)
