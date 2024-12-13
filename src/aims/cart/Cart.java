@@ -1,3 +1,7 @@
+package aims.cart;
+
+import aims.car.Car;
+
 public class Cart {
     public static final int MAX_NUMBERS_ORDERED = 5;   //Biến tĩnh cho thấy lượng xe nhiều nhất có thể thêm vào giỏ hàng cho thuê
     private Car itemsOrdered[] = new Car[MAX_NUMBERS_ORDERED];  // Những chiếc xe được thêm vào

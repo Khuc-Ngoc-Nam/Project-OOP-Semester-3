@@ -1,3 +1,4 @@
+package aims.car;
 public class Car {
     private String name;    // Tên xe (Audi R8, Lamborghini urus)
     private String id;      // Biển số xe
