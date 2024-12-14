@@ -63,7 +63,7 @@ public class CredentialStore {
 
     // Get Admin Credentials
     public static Map<String, String> getAdminCredentials() {
-        return loadOrCreateCredentials(ADMIN_FILE, "admin", 50, 10);
+        return loadOrCreateCredentials(ADMIN_FILE, "admin", 5, 10);
     }
 
     // Get Car Owner Credentials

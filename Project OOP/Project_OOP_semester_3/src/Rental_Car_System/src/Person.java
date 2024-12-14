@@ -4,13 +4,19 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Person {
-    protected String name;
-    protected String id;
+    protected String firstName, lastName, gender, location, contact;
     protected List<String> mailbox;
 
-    public Person(String name, String id) {
-        this.name = name;
-        this.id = id;
+    public Person() {
+        
+    }
+
+    public Person(String firstName, String lastName, String gender, String location, String contact) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.location = location;
+        this.contact = contact;
         this.mailbox = new ArrayList<>();
     }
 
@@ -19,7 +25,7 @@ public abstract class Person {
     }
 
     private void receiveMessage(String message, Person sender) {
-        mailbox.add("From " + sender.getName() + ": " + message);
+        mailbox.add("From " + sender.getFullName() + ": " + message);
     }
 
 
@@ -36,19 +42,35 @@ public abstract class Person {
 
     public abstract boolean logIn(String username, String password, Map<String, String> credentials);
 
-    public String getName() {
-        return name;
+    public void setPerson(String fN, String lN, String g, String l, String c){
+	
+		firstName = fN;
+		lastName = lN;
+		gender = g;
+		location = l;
+		contact = c;
+	}
+
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public String getId() {
-        return id;
+    public String getFullName() {
+        return getFirstName() + " " + getLastName();
     }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    public String getGender() {
+		return gender;
+	}
+	
+	public String getLocation() {
+		return location;
+	}
+	
+	public String getContact() {
+		return contact;
+	}
 }
