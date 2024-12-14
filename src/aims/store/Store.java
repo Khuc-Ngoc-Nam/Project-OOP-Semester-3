@@ -30,22 +30,20 @@ public class Store {
     public void removeCarInStore(Car vehicle) {
         if (checkCar(vehicle) == false) {
             System.out.println("Sorry, the car is not in the store");
-        }
-        else {
+        } else {
             int n = this.itemInStore.length;
             Car newarr[] = new Car[n - 1];
+            int j = 0; // Chỉ số cho mảng mới
             for (int i = 0; i < n; i++) {
-                if (this.itemInStore[i] == vehicle) {
-                    continue;
-                }
-                else {
-                    newarr[i] = this.itemInStore[i];
+                if (this.itemInStore[i] != vehicle) {
+                    newarr[j] = this.itemInStore[i];
+                    j++;
                 }
             }
             this.itemInStore = newarr;
         }
     }
-
+    
     public static void main(String[] args) {
         Car car1 = new Car(20);
         Car car2 = new Car(20);

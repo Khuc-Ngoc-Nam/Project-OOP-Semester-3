@@ -26,6 +26,26 @@ public class Cart {
             }
         }
     }
+
+    //Thêm 1 list xe
+    public void addCar(Car[] carList) {
+        if (carList.length + this.getQtyOrdered() > MAX_NUMBERS_ORDERED) {
+            System.out.println("Sorry, your cart does not have enough space");
+        }
+        for (Car i: carList) {
+            addCar(i);      // Gọi phương thức thêm 1 car bên trên.
+        }
+    }
+
+    // Thêm 1 lúc 2 xe
+    public  void  addCar(Car xe1, Car xe2) {
+        if (this.getQtyOrdered() + 2 > MAX_NUMBERS_ORDERED) {
+            System.out.println("Sorry, your cart does not have enough space");
+        }
+        addCar(xe1);
+        addCar(xe2);
+    }
+
     // Xóa đi chiếc xe
     public void removeCar(Car xoa_xe_khoi_gio) {
         if (this.qtyOrdered == 0) {
@@ -62,26 +82,65 @@ public class Cart {
         return (newqty - oldqty == 1);
     }
 
-    public static void main(String[] args) {
-        Car item1 = new Car(35);
-        Cart cart = new Cart();
-        cart.addCar(item1);
-        System.out.println(cart.totalCost());
-        System.out.println(cart.checkremove());
+    public void print() {
+        float totalCost = 0;
+        for (Car vehicle: this.itemsOrdered) {
+            if (vehicle == null) {continue;}
+            System.out.println(vehicle.toString());
+            totalCost += vehicle.getCost();
+        }
+        System.out.printf("The total cost is: %f\n", totalCost);
     }
 
-    public void print() {
-        System.out.println("List of Cars in the cart:");
-        for (int i = 0; i < MAX_NUMBERS_ORDERED; i++) {
-            if (itemsOrdered[i] != null) {
-                System.out.println("Car " + (i + 1) + ": " + itemsOrdered[i].getName() +
-                    " - Brand: " + itemsOrdered[i].getBranch() + 
-                    " - Type: " + itemsOrdered[i].getType() +
-                    " - Year of Manufacture: " + itemsOrdered[i].getManufactoring_year() +
-                    " - Cost: " + itemsOrdered[i].getCost());
+    public void searchCar_id(int no) {
+        // Tìm kiếm Car theo số thứ tự
+        boolean flag = false;
+        Car found = null;
+        for (Car veh : this.itemsOrdered) {
+            if (veh == null) {continue;}
+            if (veh.getNo() == no) {
+                flag = true;
+                found = veh;
+                break;
             }
         }
-        System.out.println("Total items in cart: " + qtyOrdered);
+        if (flag) {
+            System.out.println(found.toString());
+        }
+        else {
+            System.out.println("Sorry, none of disks have the N.o you want tho search");
+        }
+    }
+
+    public void searchCar_name(String name) {
+        boolean flag = false;
+        Car found = null;
+        for (Car veh : this.itemsOrdered) {
+            if(veh == null){continue;}
+            if (veh.isMatch(name)) {
+                flag = true;
+                found = veh;
+                break;
+            }
+        }
+        if (flag) {
+            System.out.println(found.toString());
+        }
+        else {
+            System.out.println("Sorry, none of disks have the N.o you want tho search");
+        }
     }
     
+    public static void main(String[] args) {
+        Car item1 = new Car(35);
+        Car item2 = new Car(40);
+    
+        Cart cart = new Cart();
+        Car[] carList = new Car[]{item1, item2};
+        cart.addCar(carList);
+        cart.searchCar_id(2);
+        System.out.println(item1.getNo());
+    }
 }
+
+
