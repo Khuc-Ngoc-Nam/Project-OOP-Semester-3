@@ -5,8 +5,8 @@ import java.util.Map;
 import Rental_Car_System.src.Person;
 
 public class Admin extends Person{
-    public Admin(String name, String id) {
-        super(name, id);
+    public Admin(String firstName, String lastName, String gender, String location, String contact) {
+        super(firstName, lastName, gender, location, contact);
     }
     @Override
     public boolean logIn(String username, String password, Map<String, String> credentials) {

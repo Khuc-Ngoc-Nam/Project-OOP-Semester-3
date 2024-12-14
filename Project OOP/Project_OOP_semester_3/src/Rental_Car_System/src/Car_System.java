@@ -1,28 +1,34 @@
 package Rental_Car_System.src;
-import Rental_Car_System.src.Admin.Admin;
-import Rental_Car_System.src.Customer.Customer;
+import Rental_Car_System.src.Car.Car;
 import Rental_Car_System.src.CarOwner.CarOwner;
+import Rental_Car_System.src.Customer.Customer;
+import Rental_Car_System.src.Store.Store;
 
 public class Car_System {
     public static void main(String[] args) {
-        Customer customer = new Customer("Alice", "001");
-        Admin admin = new Admin("Bob", "002");
-        CarOwner carOwner = new CarOwner("Charlie", "003");
+        // Create a store
+        Store store = new Store();
 
-        // Customer login
-        if (customer.logIn("customer1", "password123", CredentialStore.getCustomerCredentials())) {
-            System.out.println("Welcome, " + customer.getName());
-        }
+        // Create a car owner and add cars to the store
+        CarOwner owner = new CarOwner("Alice", "Smith", "Female", "New York", "123-456-7890");
+        Car car1 = new Car("SUV", "Toyota Highlander", 35000.0, true, null);
+        Car car2 = new Car("Sedan", "Honda Accord", 25000.0, true, null);
+        owner.addCar(car1, store);
+        owner.addCar(car2, store);
 
-        // Admin login
-        if (admin.logIn("admin1", "adminPass", CredentialStore.getAdminCredentials())) {
-            System.out.println("Welcome, " + admin.getName());
-        }
+        // Create a customer
+        Customer customer = new Customer("Bob", "Johnson", "Male", "Los Angeles", "987-654-3210");
 
-        // Car Owner login
-        if (carOwner.logIn("owner1", "wrongPass", CredentialStore.getCarOwnerCredentials())) {
-            System.out.println("Welcome, " + carOwner.getName());
-        }
-    
+        // View available cars
+        customer.viewAvailableCars(store);
+
+        // Rent a car
+        customer.rentCar(car1, store);
+
+        // View rental history
+        customer.viewRentalHistory();
+
+        // View available cars after renting
+        customer.viewAvailableCars(store);
     }
 }
