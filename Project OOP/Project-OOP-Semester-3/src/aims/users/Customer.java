@@ -39,10 +39,11 @@ public class Customer extends Person {
         Scanner scanner = new Scanner(System.in);
         int choice;
         do {
-            System.out.println("--- Customer Menu ---");
+            System.out.println("------------ Welcome " + fullName + " ------------");
             System.out.println("1. View cars in store");
-            System.out.println("2. View your order");
-            System.out.println("3. Log out");
+            System.out.println("2. Add a car to your cart");
+            System.out.println("3. View your cart");
+            System.out.println("4. Log out");
             System.out.print("Your option: ");
             choice = scanner.nextInt();
             scanner.nextLine();
@@ -52,18 +53,21 @@ public class Customer extends Person {
                     viewStore();
                     break;
                 case 2:
-                    viewCart(scanner);
+                    addCarOption(scanner);
                     break;
                 case 3:
+                    viewCart(scanner);
+                    break;
+                case 4:
                     System.out.println("You've logged out successfully!");
                     break;
                 default:
                     System.out.println("Invalid option! Try again.");
             }
-        } while (choice != 3);
+        } while (choice != 4);
     }
 
-    private void viewStore() {
+    public void viewStore() {
         try (BufferedReader reader = new BufferedReader(new FileReader(CARS_FILE))) {
             String line;
             System.out.println("--- Cars Available in Store ---");
@@ -79,7 +83,7 @@ public class Customer extends Person {
         }
     }
 
-    private void viewCart(Scanner scanner) {
+    public void viewCart(Scanner scanner) {
         cart.displayCartDetails();
         System.out.println("1. Remove car out of your cart");
         System.out.println("2. View rental payment");
@@ -116,13 +120,24 @@ public class Customer extends Person {
         System.out.println("Car added to your cart: " + car.getName());
     }
 
-    public void addMultipleCars(Car[] cars) {
-        cart.addCarsToCart(cars);
-        System.out.println("Multiple cars have been added to your cart.");
-    }
+    public void addCarOption(Scanner scanner) {
+        System.out.println("--- Cars Available in Store ---");
+        viewStore();
+        System.out.print("Enter car name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter license plate: ");
+        String licensePlate = scanner.nextLine();
+        System.out.print("Enter brand: ");
+        String brand = scanner.nextLine();
+        System.out.print("Enter type: ");
+        String type = scanner.nextLine();
+        System.out.print("Enter manufacturing year: ");
+        int year = scanner.nextInt();
+        System.out.print("Enter rental price: ");
+        float price = scanner.nextFloat();
+        scanner.nextLine();
 
-    public void addTwoCars(Car car1, Car car2) {
-        cart.addCarsToCart(car1, car2);
-        System.out.println("Two cars have been added to your cart.");
+        Car car = new Car(name, licensePlate, brand, type, year, price);
+        addCar(car);
     }
 }
