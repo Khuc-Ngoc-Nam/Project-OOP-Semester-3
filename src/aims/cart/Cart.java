@@ -113,6 +113,26 @@ public class Cart {
         System.out.println("Không tìm thấy xe với tên yêu cầu.");
     }
 
+    public Car getCarAtIndex(int index) {
+        if (index >= 0 && index < carCount) {
+            return carsInCart[index];
+        }
+        return null;
+    }
+    
+    public void removeCarFromCartByIndex(int index) {
+        if (index >= 0 && index < carCount) {
+            Car removedCar = carsInCart[index];
+            for (int i = index; i < carCount - 1; i++) {
+                carsInCart[i] = carsInCart[i + 1];
+            }
+            carsInCart[--carCount] = null; // Giảm số lượng xe và đặt vị trí cuối thành null
+            System.out.printf("Xe '%s' đã được xóa khỏi giỏ hàng.\n", removedCar.getName());
+        } else {
+            System.out.println("Chỉ số không hợp lệ.");
+        }
+    }
+
     // Main để test
     public static void main(String[] args) {
         Car car1 = new Car("Ferrari", "17A-12345", "Ferrari", "SUV", 2022, 500);

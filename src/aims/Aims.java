@@ -1,67 +1,93 @@
-// package aims;
-
-// import aims.car.Car;
-// import aims.cart.Cart;
-
-// public class Aims {
-//     public static void main(String[] args) {
-//         Cart anOrder = new Cart();
-//         Car car1 = new Car("Land Cruiser LC300", "17A-56158", "Toyota", "SUV", 2023, 499);
-//         anOrder.addCar(car1);
-//         Car car2 = new Car("Lexus LX600", "18B-28565", "Toyota", "SUV", 2023, 799);
-//         anOrder.addCar(car2);
-//         Car car3 = new Car("Maybach GLS680", "17A-56159", "Mercedes", "SUV", 2023, 989);
-//         anOrder.addCar(car3);
-//         Car car4 = new Car("BMW Z4", "17A-08090", "BMW", "Couple", 2023, 399);
-//         anOrder.addCar(car4);
-
-//         System.out.println("Total Cost is: ");
-//         System.out.println(anOrder.totalCost());
-//         System.out.println(anOrder.getQtyOrdered());
-
-//         anOrder.print();
-
-//         anOrder.removeCar(car3);
-//         System.out.println(anOrder.getQtyOrdered());
-
-//         anOrder.print();
-//     }
-// }
-
+// Aims.java
 package aims;
 
-import aims.users.Admin;
-import aims.users.Customer;
-import aims.users.CarOwner;
 import aims.store.Store;
-
+import aims.users.Admin;
+import aims.users.CarOwner;
+import aims.users.Customer;
+import aims.users.Person;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Aims {
     public static void main(String[] args) {
-        // Tạo dữ liệu mẫu
         Store store = new Store(); // Quản lý kho xe
 
-        Admin admin = new Admin("admin", "admin123", store);
-        Customer customer = new Customer("alice", "password", "Alice", "0123456789", "123456789");
-        CarOwner carOwner = new CarOwner("john", "password123", "John", "0456789123");
+        // Load dữ liệu tài khoản từ tệp CSV
+        ArrayList<Admin> admins = new ArrayList<>();
+        ArrayList<Customer> customers = new ArrayList<>();
+        ArrayList<CarOwner> carOwners = new ArrayList<>();
 
-        // Chạy chương trình chính
-        Scanner sc = new Scanner(System.in);
+        try {
+            loadAccounts(admins, customers, carOwners);
+        } catch (IOException e) {
+            System.out.println("Không thể tải dữ liệu tài khoản: " + e.getMessage());
+            return;
+        }
+
+        Scanner scanner = new Scanner(System.in);
         System.out.print("Nhập tài khoản: ");
-        String username = sc.nextLine();
+        String username = scanner.nextLine();
         System.out.print("Nhập mật khẩu: ");
-        String password = sc.nextLine();
+        String password = scanner.nextLine();
 
-        if (admin.login(username, password)) {
-            admin.displayMenu();
-        } else if (customer.login(username, password)) {
-            customer.displayMenu(store);
-        } else if (carOwner.login(username, password)) {
-            carOwner.displayMenu(store);
+        // Xác thực tài khoản
+        Person loggedInPerson = authenticate(username, password, admins, customers, carOwners);
+        if (loggedInPerson != null) {
+            loggedInPerson.displayMenu(store);
         } else {
             System.out.println("Tài khoản hoặc mật khẩu không đúng.");
         }
     }
-}
 
+    private static void loadAccounts(ArrayList<Admin> admins, ArrayList<Customer> customers, ArrayList<CarOwner> carOwners) throws IOException {
+        String basePath = "D:/Git của Nam/RentedCarByNam/src/aims/";
+
+        BufferedReader adminReader = new BufferedReader(new FileReader(basePath + "admins.csv"));
+        String line;
+        while ((line = adminReader.readLine()) != null) {
+            String[] parts = line.split(",");
+            admins.add(new Admin(parts[0], parts[1], new Store()));
+        }
+        adminReader.close();
+
+        BufferedReader customerReader = new BufferedReader(new FileReader(basePath + "customers.csv"));
+        while ((line = customerReader.readLine()) != null) {
+            String[] parts = line.split(",");
+            customers.add(new Customer(parts[0], parts[1], parts[2], parts[3], parts[4]));
+        }
+        customerReader.close();
+
+        BufferedReader carOwnerReader = new BufferedReader(new FileReader(basePath + "carOwners.csv"));
+        while ((line = carOwnerReader.readLine()) != null) {
+            String[] parts = line.split(",");
+            carOwners.add(new CarOwner(parts[0], parts[1], parts[2], parts[3]));
+        }
+        carOwnerReader.close();
+    }
+
+    private static Person authenticate(String username, String password, ArrayList<Admin> admins, ArrayList<Customer> customers, ArrayList<CarOwner> carOwners) {
+        for (Admin admin : admins) {
+            if (admin.login(username, password)) {
+                return admin;
+            }
+        }
+
+        for (Customer customer : customers) {
+            if (customer.login(username, password)) {
+                return customer;
+            }
+        }
+
+        for (CarOwner carOwner : carOwners) {
+            if (carOwner.login(username, password)) {
+                return carOwner;
+            }
+        }
+
+        return null;
+    }
+}

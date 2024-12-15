@@ -1,141 +1,106 @@
+// Customer.java
 package aims.users;
 
 import aims.car.Car;
+import aims.cart.Cart;
 import aims.store.Store;
-
-import java.util.ArrayList;
 import java.util.Scanner;
 
-public class CarOwner extends Person {
-    private String name; // Tên người bán
-    private String phone; // Số điện thoại
-    private ArrayList<Car> ownedCars = new ArrayList<>(); // Danh sách xe sở hữu
+public class Customer extends Person {
+    private String fullName;
+    private String phoneNumber;
+    private String idCard;
+    private Cart cart;
 
-    // Constructor
-    public CarOwner(String username, String password, String name, String phone) {
+    public Customer(String username, String password, String fullName, String phoneNumber, String idCard) {
         super(username, password);
-        this.name = name;
-        this.phone = phone;
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
+        this.idCard = idCard;
+        this.cart = new Cart();
     }
 
-    // Getter cho tên người bán
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
-    // Hiển thị menu chính cho CarOwner
     @Override
     public void displayMenu(Store store) {
-        Scanner sc = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         int choice;
         do {
-            System.out.println("--------- Xin chào " + name + " ----------");
-            System.out.println("0. Xem danh sách xe của bạn");
-            System.out.println("1. Chỉnh sửa danh sách xe của bạn");
-            System.out.println("2. Exit");
-            System.out.print("Chọn: ");
-            choice = sc.nextInt();
-            sc.nextLine(); // Đọc bỏ dòng mới
+            System.out.println("------------ Chào mừng " + fullName + " ------------");
+            System.out.println("1. Xem danh sách xe trong cửa hàng");
+            System.out.println("2. Xem giỏ hàng");
+            System.out.println("3. Đăng xuất");
+            System.out.print("Lựa chọn: ");
+            choice = scanner.nextInt();
+            scanner.nextLine();
 
             switch (choice) {
-                case 0:
-                    viewOwnedCars();
-                    break;
                 case 1:
-                    editOwnedCars(sc);
+                    viewStore(store, scanner);
                     break;
                 case 2:
-                    System.out.println("Thoát chương trình. Hẹn gặp lại!");
+                    viewCart(scanner);
+                    break;
+                case 3:
+                    System.out.println("Hẹn gặp lại!");
                     break;
                 default:
-                    System.out.println("Lựa chọn không hợp lệ.");
+                    System.out.println("Lựa chọn không hợp lệ. Vui lòng thử lại.");
             }
-        } while (choice != 2);
+        } while (choice != 3);
     }
 
-    // Hiển thị danh sách xe của CarOwner
-    private void viewOwnedCars() {
-        if (ownedCars.isEmpty()) {
-            System.out.println("Hiện tại bạn chưa thêm xe nào.");
-            return;
-        }
+    private void viewStore(Store store, Scanner scanner) {
+        store.displayCars();
+        System.out.print("Nhập số thứ tự của xe muốn thêm vào giỏ hàng (hoặc nhập 0 để quay lại): ");
+        int carIndex = scanner.nextInt();
+        scanner.nextLine();
 
-        System.out.println("---------- Danh sách xe của bạn ----------");
-        for (int i = 0; i < ownedCars.size(); i++) {
-            Car car = ownedCars.get(i);
-            System.out.printf("%d. Tên xe: %s | Giá thuê: %.2f | Tình trạng: %s\n",
-                    i + 1,
-                    car.getName(),
-                    car.getRentalPrice(),
-                    car.isRented() ? "Đã thuê" : "Có sẵn");
-        }
-    }
-
-    // Chỉnh sửa danh sách xe
-    private void editOwnedCars(Scanner sc) {
-        int choice;
-        do {
-            System.out.println("---------- Chỉnh sửa danh sách xe của bạn ----------");
-            System.out.println("0. Thêm xe");
-            System.out.println("1. Xóa xe");
-            System.out.println("2. Exit");
-            System.out.print("Chọn: ");
-            choice = sc.nextInt();
-            sc.nextLine(); // Đọc bỏ dòng mới
-
-            switch (choice) {
-                case 0:
-                    addCar(sc);
-                    break;
-                case 1:
-                    removeCar(sc);
-                    break;
-                case 2:
-                    System.out.println("Thoát chỉnh sửa danh sách xe.");
-                    break;
-                default:
-                    System.out.println("Lựa chọn không hợp lệ.");
+        if (carIndex > 0 && carIndex <= store.getInventorySize()) {
+            Car car = store.getCarInventory().get(carIndex - 1);
+            if (!car.isRented()) {
+                cart.addCarToCart(car);
+                System.out.println("Xe đã được thêm vào giỏ hàng.");
+            } else {
+                System.out.println("Xe đã được thuê, không thể thêm vào giỏ hàng.");
             }
-        } while (choice != 2);
-    }
-
-    // Thêm xe vào danh sách
-    private void addCar(Scanner sc) {
-        System.out.print("Nhập tên xe: ");
-        String name = sc.nextLine();
-        System.out.print("Nhập biển số xe: ");
-        String licensePlate = sc.nextLine();
-        System.out.print("Nhập hãng xe: ");
-        String brand = sc.nextLine();
-        System.out.print("Nhập loại xe: ");
-        String type = sc.nextLine();
-        System.out.print("Nhập năm sản xuất: ");
-        int year = sc.nextInt();
-        System.out.print("Nhập giá thuê: ");
-        float rentalPrice = sc.nextFloat();
-        sc.nextLine(); // Đọc bỏ dòng mới
-
-        Car newCar = new Car(name, licensePlate, brand, type, year, rentalPrice);
-        ownedCars.add(newCar);
-        System.out.println("Xe đã được thêm vào danh sách của bạn.");
-    }
-
-    // Xóa xe khỏi danh sách
-    private void removeCar(Scanner sc) {
-        if (ownedCars.isEmpty()) {
-            System.out.println("Hiện tại bạn chưa có xe nào để xóa.");
-            return;
-        }
-
-        System.out.print("Nhập số thứ tự của xe muốn xóa: ");
-        int index = sc.nextInt();
-        sc.nextLine(); // Đọc bỏ dòng mới
-
-        if (index > 0 && index <= ownedCars.size()) {
-            ownedCars.remove(index - 1);
-            System.out.println("Xe đã được xóa khỏi danh sách của bạn.");
         } else {
-            System.out.println("Số thứ tự không hợp lệ.");
+            System.out.println("Quay lại menu chính.");
+        }
+    }
+
+    private void viewCart(Scanner scanner) {
+        cart.displayCartDetails();
+        System.out.println("1. Xóa xe khỏi giỏ hàng");
+        System.out.println("2. Hiển thị tổng số tiền phải trả");
+        System.out.println("3. Quay lại");
+        System.out.print("Lựa chọn: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (choice) {
+            case 1:
+                System.out.print("Nhập số thứ tự của xe muốn xóa: ");
+                int carIndex = scanner.nextInt();
+                scanner.nextLine();
+                if (carIndex > 0 && carIndex <= cart.getCarCount()) {
+                    cart.removeCarFromCartByIndex(carIndex - 1);
+                    System.out.println("Xe đã được xóa khỏi giỏ hàng.");
+                } else {
+                    System.out.println("Số thứ tự không hợp lệ.");
+                }
+                break;
+            case 2:
+                System.out.printf("Tổng số tiền phải trả: %.2f\n", cart.calculateTotalCost());
+                break;
+            case 3:
+                System.out.println("Quay lại menu chính.");
+                break;
+            default:
+                System.out.println("Lựa chọn không hợp lệ.");
         }
     }
 }
