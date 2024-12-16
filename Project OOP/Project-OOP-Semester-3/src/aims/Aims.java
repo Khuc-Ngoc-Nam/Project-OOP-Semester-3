@@ -5,17 +5,16 @@ import aims.users.Admin;
 import aims.users.CarOwner;
 import aims.users.Customer;
 import aims.users.Person;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Aims {
-    public static void main(String[] args) {
-        Store store = new Store(); // Manage the store
+    private static final String CARS_FILE = "C:\\Users\\MY PC\\Project OOP\\Project-OOP-Semester-3\\src\\aims\\Car.csv";
 
-        // Load account data from CSV files
+    public static void main(String[] args) {
+        Store store = new Store();
+
         ArrayList<Admin> admins = new ArrayList<>();
         ArrayList<Customer> customers = new ArrayList<>();
         ArrayList<CarOwner> carOwners = new ArrayList<>();
@@ -33,35 +32,36 @@ public class Aims {
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
 
-        // Authenticate account
         Person loggedInPerson = authenticate(username, password, admins, customers, carOwners);
         if (loggedInPerson != null) {
-            loggedInPerson.displayMenu(store);
+            if (loggedInPerson instanceof Customer) {
+                ((Customer) loggedInPerson).displayMenu(store);
+            } else {
+                loggedInPerson.displayMenu(store);
+            }
         } else {
             System.out.println("Invalid username or password.");
         }
     }
 
     private static void loadAccounts(ArrayList<Admin> admins, ArrayList<Customer> customers, ArrayList<CarOwner> carOwners) throws IOException {
-        String adminFilePath = "C:\\Users\\MY PC\\Project OOP\\Project-OOP-Semester-3\\src\\aims\\admins.csv"; // Replace with the full path to admins.csv
-        String customerFilePath = "C:\\Users\\MY PC\\Project OOP\\Project-OOP-Semester-3\\src\\aims\\customers.csv"; // Replace with the full path to customers.csv
-        String carOwnerFilePath = "C:\\Users\\MY PC\\Project OOP\\Project-OOP-Semester-3\\src\\aims\\carOwners.csv"; // Replace with the full path to carOwners.csv
-
-        // Load admin accounts
-        try (BufferedReader adminReader = new BufferedReader(new FileReader(adminFilePath))) {
+        // Load Admin Accounts
+        String adminFile = "C:\\Users\\MY PC\\Project OOP\\Project-OOP-Semester-3\\src\\aims\\admins.csv";
+        try (BufferedReader reader = new BufferedReader(new FileReader(adminFile))) {
             String line;
-            while ((line = adminReader.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length >= 2) {
-                    admins.add(new Admin(parts[0], parts[1], new Store()));
+                    admins.add(new Admin(parts[0], parts[1]));
                 }
             }
         }
 
-        // Load customer accounts
-        try (BufferedReader customerReader = new BufferedReader(new FileReader(customerFilePath))) {
+        // Load Customer Accounts
+        String customerFile = "C:\\Users\\MY PC\\Project OOP\\Project-OOP-Semester-3\\src\\aims\\customers.csv";
+        try (BufferedReader reader = new BufferedReader(new FileReader(customerFile))) {
             String line;
-            while ((line = customerReader.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length >= 5) {
                     customers.add(new Customer(parts[0], parts[1], parts[2], parts[3], parts[4]));
@@ -69,10 +69,11 @@ public class Aims {
             }
         }
 
-        // Load car owner accounts
-        try (BufferedReader carOwnerReader = new BufferedReader(new FileReader(carOwnerFilePath))) {
+        // Load Car Owner Accounts
+        String carOwnerFile = "C:\\Users\\MY PC\\Project OOP\\Project-OOP-Semester-3\\src\\aims\\carOwners.csv";
+        try (BufferedReader reader = new BufferedReader(new FileReader(carOwnerFile))) {
             String line;
-            while ((line = carOwnerReader.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length >= 4) {
                     carOwners.add(new CarOwner(parts[0], parts[1], parts[2], parts[3]));
