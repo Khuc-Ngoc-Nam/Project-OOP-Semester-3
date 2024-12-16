@@ -120,18 +120,21 @@ public class Cart {
         return null;
     }
     
-    public void removeCarFromCartByIndex(int index) {
+    public Car removeCarFromCartByIndex(int index) {
         if (index >= 0 && index < carCount) {
             Car removedCar = carsInCart[index];
             for (int i = index; i < carCount - 1; i++) {
                 carsInCart[i] = carsInCart[i + 1];
             }
-            carsInCart[--carCount] = null; // Giảm số lượng xe và đặt vị trí cuối thành null
+            carsInCart[--carCount] = null; // Reduce car count and nullify the last slot
             System.out.printf("The car '%s' has been removed.\n", removedCar.getName());
+            return removedCar;
         } else {
             System.out.println("Invalid serial number! Try again.");
+            return null; // Return null if the index is invalid
         }
     }
+    
 
     // Main để test
     public static void main(String[] args) {
