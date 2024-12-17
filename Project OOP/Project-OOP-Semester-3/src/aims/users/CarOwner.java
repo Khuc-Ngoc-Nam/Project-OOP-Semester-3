@@ -10,7 +10,7 @@ public class CarOwner extends Person {
     private String name;
     private String phone;
     private ArrayList<Car> ownedCars;
-    private static final String CARS_FILE = "C:\\Users\\MY PC\\Project OOP\\Project-OOP-Semester-3\\src\\aims\\Car.csv";
+    private static final String CARS_FILE = "Project-OOP-Semester-3\\src\\aims\\Car.csv";
 
     public CarOwner(String username, String password, String name, String phone) {
         super(username, password);

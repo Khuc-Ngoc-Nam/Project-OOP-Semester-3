@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TableView editable="true" layoutX="67.0" layoutY="53.0" prefHeight="304.0" prefWidth="467.0">
+        <columns>
+            <TableColumn prefWidth="39.33331298828125" text="N.o" />
+          <TableColumn prefWidth="89.33332061767578" text="Username" />
+          <TableColumn minWidth="6.0" prefWidth="99.99998474121094" text="Password" />
+            <TableColumn minWidth="0.0" prefWidth="97.99993896484375" text="Name" />
+            <TableColumn prefWidth="141.33328247070312" text="Phone Number" />
+        </columns>
+      </TableView>
+      <Label layoutX="218.0" layoutY="14.0" text="Car Owner List" textFill="#0600c3">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Button layoutX="493.0" layoutY="361.0" mnemonicParsing="false" text="Back" />
+      <Button layoutX="74.0" layoutY="361.0" mnemonicParsing="false" text="Prev page" />
+      <Button layoutX="159.0" layoutY="361.0" mnemonicParsing="false" text="Next page" />
+   </children>
+</Pane>

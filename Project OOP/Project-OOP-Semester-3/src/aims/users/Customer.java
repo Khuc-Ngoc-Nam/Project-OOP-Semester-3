@@ -10,7 +10,7 @@ public class Customer extends Person {
     private String fullName;
     private String phoneNumber;
     private String idCard;
-    private static final String CARS_FILE = "C:\\Users\\MY PC\\Project OOP\\Project-OOP-Semester-3\\src\\aims\\Car.csv";
+    private static final String CARS_FILE = "Project-OOP-Semester-3\\src\\aims\\Car.csv";
 
     public Customer(String username, String password, String fullName, String phoneNumber, String idCard) {
         super(username, password);
