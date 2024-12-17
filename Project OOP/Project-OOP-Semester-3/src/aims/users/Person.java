@@ -3,8 +3,8 @@ package aims.users;
 import aims.store.Store;
 
 public abstract class Person {
-    private String username; // Tên đăng nhập
-    private String password; // Mật khẩu
+    public String username; // Tên đăng nhập
+    public String password; // Mật khẩu
 
     public Person(String username, String password) {
         this.username = username;

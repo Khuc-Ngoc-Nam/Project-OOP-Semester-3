@@ -1,9 +1,6 @@
 package aims.users;
 
 import aims.store.Store;
-import aims.users.Person;
-import aims.users.CarOwner;
-import aims.users.Customer;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -32,22 +29,22 @@ public class Admin extends Person {
 
             switch (choice) {
                 case 1:
-                    viewAccounts("C:\\Users\\MY PC\\Project OOP\\Project-OOP-Semester-3\\src\\aims\\carOwners.csv");
+                    viewAccounts("Project-OOP-Semester-3\\src\\aims\\carOwners.csv");
                     break;
                 case 2:
                     addAccount(scanner, "carOwner");
                     break;
                 case 3:
-                    deleteAccount(scanner, "C:\\Users\\MY PC\\Project OOP\\Project-OOP-Semester-3\\src\\aims\\carOwners.csv");
+                    deleteAccount(scanner, "Project-OOP-Semester-3\\src\\aims\\carOwners.csv");
                     break;
                 case 4:
-                    viewAccounts("C:\\Users\\MY PC\\Project OOP\\Project-OOP-Semester-3\\src\\aims\\customers.csv");
+                    viewAccounts("Project-OOP-Semester-3\\src\\aims\\customers.csv");
                     break;
                 case 5:
                     addAccount(scanner, "customer");
                     break;
                 case 6:
-                    deleteAccount(scanner, "C:\\Users\\MY PC\\Project OOP\\Project-OOP-Semester-3\\src\\aims\\customers.csv");
+                    deleteAccount(scanner, "Project-OOP-Semester-3\\src\\aims\\customers.csv");
                     break;
                 case 7:
                     System.out.println("You've logged out successfully!");
@@ -84,7 +81,7 @@ public class Admin extends Person {
             String phone = scanner.nextLine();
 
             CarOwner carOwner = new CarOwner(username, password, name, phone);
-            saveToCSV(carOwner, "C:\\Users\\MY PC\\Project OOP\\Project-OOP-Semester-3\\src\\aims\\carOwners.csv");
+            saveToCSV(carOwner, "Project-OOP-Semester-3\\src\\aims\\carOwners.csv");
         } else if (accountType.equals("customer")) {
             System.out.print("Enter full name: ");
             String fullName = scanner.nextLine();
@@ -94,7 +91,7 @@ public class Admin extends Person {
             String idCard = scanner.nextLine();
 
             Customer customer = new Customer(username, password, fullName, phoneNumber, idCard);
-            saveToCSV(customer, "C:\\Users\\MY PC\\Project OOP\\Project-OOP-Semester-3\\src\\aims\\customers.csv");
+            saveToCSV(customer, "Project-OOP-Semester-3\\src\\aims\\customers.csv");
         }
 
         System.out.println("Account added successfully!");

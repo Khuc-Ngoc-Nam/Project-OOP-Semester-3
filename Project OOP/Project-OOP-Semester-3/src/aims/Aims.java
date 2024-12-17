@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Aims {
-    private static final String CARS_FILE = "C:\\Users\\MY PC\\Project OOP\\Project-OOP-Semester-3\\src\\aims\\Car.csv";
+    private static final String CARS_FILE = "Project-OOP-Semester-3\\src\\aims\\Car.csv";
 
     public static void main(String[] args) {
         Store store = new Store();
@@ -46,7 +46,7 @@ public class Aims {
 
     private static void loadAccounts(ArrayList<Admin> admins, ArrayList<Customer> customers, ArrayList<CarOwner> carOwners) throws IOException {
         // Load Admin Accounts
-        String adminFile = "C:\\Users\\MY PC\\Project OOP\\Project-OOP-Semester-3\\src\\aims\\admins.csv";
+        String adminFile = "Project-OOP-Semester-3\\src\\aims\\admins.csv";
         try (BufferedReader reader = new BufferedReader(new FileReader(adminFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -58,7 +58,7 @@ public class Aims {
         }
 
         // Load Customer Accounts
-        String customerFile = "C:\\Users\\MY PC\\Project OOP\\Project-OOP-Semester-3\\src\\aims\\customers.csv";
+        String customerFile = "Project-OOP-Semester-3\\src\\aims\\customers.csv";
         try (BufferedReader reader = new BufferedReader(new FileReader(customerFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -70,7 +70,7 @@ public class Aims {
         }
 
         // Load Car Owner Accounts
-        String carOwnerFile = "C:\\Users\\MY PC\\Project OOP\\Project-OOP-Semester-3\\src\\aims\\carOwners.csv";
+        String carOwnerFile = "Project-OOP-Semester-3\\src\\aims\\carOwners.csv";
         try (BufferedReader reader = new BufferedReader(new FileReader(carOwnerFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
