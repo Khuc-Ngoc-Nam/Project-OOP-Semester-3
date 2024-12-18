@@ -18,7 +18,7 @@ public class Customer extends Person {
         this.phoneNumber = phoneNumber;
         this.idCard = idCard;
     }
-
+   
     public String getFullName() {
         return fullName;
     }

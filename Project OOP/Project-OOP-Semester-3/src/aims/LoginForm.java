@@ -7,13 +7,13 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import aims.CarOwnerApp;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import aims.AdminMethods.CarOwnerApp;
 import aims.users.Admin;
 import aims.users.CarOwner;
 import aims.users.Customer;
@@ -119,11 +119,32 @@ public class LoginForm extends Application {
         if (alert != null) {
             if (alert.equals("Admin")) {
                 switchToCarOwnerApp();
-            } else {
+            } 
+            else if(alert.equals("CarOwner")){
+                switchToCarOwnerOption();
+            }
+            else if(alert.equals("Customer")){
+                switchToCusLogin();
+            }
+            else {
                 showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome, " + alert + " " + username + "!");
             }
         } else {
             showAlert(Alert.AlertType.ERROR, "Login Failed", "Invalid username or password.");
+        }
+    }
+    private void switchToCarOwnerOption(){
+        primaryStage.close();
+
+        // Open the CarOwnerApp stage
+        CarOwnerOption carOwnerOption = new CarOwnerOption();
+        carOwnerOption.username = usernameField.getText();
+        Stage carOwnerStage = new Stage();
+        try {
+            carOwnerOption.start(carOwnerStage);
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Unable to launch CarOwnerApp: " + e.getMessage());
         }
     }
 
@@ -140,6 +161,14 @@ public class LoginForm extends Application {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Error", "Unable to launch CarOwnerApp: " + e.getMessage());
         }
+    }
+    private void switchToCusLogin() {
+        primaryStage.close();
+
+        // Open the CusLogin stage
+        CusLogin cusLogin = new CusLogin();
+        Stage cusLoginStage = new Stage();
+        cusLogin.start(cusLoginStage);
     }
 
     private void loadAccounts(String filePath, ArrayList<Admin> admins, ArrayList<Customer> customers, ArrayList<CarOwner> carOwners) throws IOException {

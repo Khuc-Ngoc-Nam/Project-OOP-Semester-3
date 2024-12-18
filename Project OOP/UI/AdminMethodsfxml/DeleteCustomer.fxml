@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="192.0" layoutY="14.0" text="Delete a Customer" textFill="#c51717">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+      <TableView layoutX="28.0" layoutY="59.0" prefHeight="241.0" prefWidth="544.0">
+        <columns>
+          <TableColumn prefWidth="42.66662406921387" text="No" />
+          <TableColumn prefWidth="88.00000762939453" text="Username" />
+            <TableColumn prefWidth="92.0" text="Password" />
+            <TableColumn prefWidth="77.99998474121094" text="Name" />
+            <TableColumn prefWidth="132.0" text="Phone Number" />
+            <TableColumn prefWidth="114.66665649414062" text="ID Card" />
+        </columns>
+      </TableView>
+      <Button layoutX="28.0" layoutY="352.0" mnemonicParsing="false" text="Back" />
+      <TextField layoutX="352.0" layoutY="340.0" />
+      <Label layoutX="282.0" layoutY="314.0" text="Enter the index of customer you want to delete">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Button layoutX="501.0" layoutY="365.0" mnemonicParsing="false" text="Delete" />
+   </children>
+</Pane>
