@@ -125,12 +125,9 @@ public class ViewAndAdd extends Application {
             String idx = "1";
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 7) {  // Đảm bảo rằng có đủ 7 cột trong mỗi dòng
-                    // Tạo một đối tượng Car với 7 giá trị từ file CSV
-                    data.add(new CarTemp(idx, parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6]));  // Gửi đủ 7 tham số
-                    int id = Integer.parseInt(idx);
-                    id++;
-                    idx = Integer.toString(id);
+                if (parts.length == 7) {  // Ensure all columns are present
+                    data.add(new CarTemp(idx, parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6]));
+                    idx = Integer.toString(Integer.parseInt(idx) + 1);
                 }
             }
         } catch (IOException e) {
@@ -141,43 +138,37 @@ public class ViewAndAdd extends Application {
 
     // Handle the Rent button click (Add the car to the cart)
     private void handleRentButton(String carID) {
-        // Assuming Cart and Customer classes have relevant methods to add a car to the cart
-        Cart cart = new Cart();  // Assuming Cart object
-        Customer customer = new Customer(username, "password", "phone", "email", "id");  // Assuming Customer object
-
-        // Step 1: Find the car in Car.csv and update its status to "rented"
         CarTemp carToRent = findCarInStore(carID);
         if (carToRent == null) {
             showAlert(Alert.AlertType.ERROR, "Error", "Car not found or already rented.");
             return;
         }
-        Car c = new Car(carToRent.name, carToRent.licensePlate, carToRent.brand, carToRent.type, Integer.parseInt(carToRent.year), Float.parseFloat(carToRent.price));
 
-        // Step 2: Add the car to the customer's cart
-        cart.addCarToCart(c);  // Add the car to cart
+        Car c = new Car(carToRent.name, carToRent.licensePlate, carToRent.brand, carToRent.type,
+                Integer.parseInt(carToRent.year), Float.parseFloat(carToRent.price));
 
-        // Step 3: Update the car's status in the store and in the file
+        Cart cart = new Cart();
+        cart.addCarToCart(c);
+
         updateCarStatusInFile(carID, "rented");
-
-        // Step 4: Add the car to the customer's file
+        Customer customer = new Customer(username, "password", "phone", "email", "id");
         addCarToCustomerFile(customer, carToRent);
 
-        // Show success message
         showAlert(Alert.AlertType.INFORMATION, "Success", "Car added to your cart and rented.");
     }
 
-    // Find the car in Car.csv based on the carID
     private CarTemp findCarInStore(String carID) {
         File carFile = new File("Project-OOP-Semester-3\\src\\aims\\Car.csv");
+        String idx = "1";
         try (BufferedReader reader = new BufferedReader(new FileReader(carFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] attributes = line.split(",");
-                if (attributes.length == 7 && attributes[6].equals("available")) {
-                    return new CarTemp(carID, attributes[0], attributes[1], attributes[2], attributes[3],
+                if (carID.equals(idx) && attributes.length == 7 && attributes[6].equalsIgnoreCase("available")) {
+                    return new CarTemp(idx, attributes[0], attributes[1], attributes[2], attributes[3],
                             attributes[4], attributes[5], attributes[6]);
-
                 }
+                idx = Integer.toString(Integer.parseInt(idx) + 1);
             }
         } catch (IOException e) {
             System.out.println("Error reading car data: " + e.getMessage());
@@ -185,10 +176,10 @@ public class ViewAndAdd extends Application {
         return null;
     }
 
-    // Update the car status in Car.csv (from available to rented)
     private void updateCarStatusInFile(String carID, String status) {
         File originalFile = new File("Project-OOP-Semester-3\\src\\aims\\Car.csv");
         File tempFile = new File("Project-OOP-Semester-3\\src\\aims\\Car.csv.tmp");
+        String idx = "1";
 
         try (BufferedReader reader = new BufferedReader(new FileReader(originalFile));
              BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
@@ -196,10 +187,11 @@ public class ViewAndAdd extends Application {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] attributes = line.split(",");
-                if (attributes.length == 7 && attributes[1].equals(carID)) {
-                    attributes[6] = status;  // Update car status
+                if (carID.equals(idx) && attributes.length == 7) {
+                    attributes[6] = status;
                 }
                 writer.write(String.join(",", attributes) + System.lineSeparator());
+                idx = Integer.toString(Integer.parseInt(idx) + 1);
             }
         } catch (IOException e) {
             System.out.println("Error updating car status in file: " + e.getMessage());
@@ -212,9 +204,9 @@ public class ViewAndAdd extends Application {
         }
     }
 
-    // Add the car to the customer's file
     private void addCarToCustomerFile(Customer customer, CarTemp car) {
-        String fileName = "Project-OOP-Semester-3\\src\\aims\\Customer_" + customer.getUsername() + ".csv";
+        String fileName = "Customer_" + customer.getUsername() + ".csv";
+        System.out.println("Saving to file: " + fileName);
         File customerFile = new File(fileName);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(customerFile, true))) {
@@ -224,15 +216,14 @@ public class ViewAndAdd extends Application {
             }
 
             // Add car details to the customer's file
-            writer.write(String.format("%s,%s,%s,%s,%s,%s",
+            writer.write(String.format("%s,%s,%s,%s,%s,%s%s",
                     car.name, car.licensePlate, car.brand, car.type,
-                    car.year, car.price));
+                    car.year, car.price, System.lineSeparator()));
         } catch (IOException e) {
             System.out.println("Error saving car to customer file: " + e.getMessage());
         }
     }
 
-    // Handle Back button action (return to the previous stage)
     private void handleBackButton(Stage currentStage) {
         currentStage.close();
         if (previousStage != null) {
@@ -240,7 +231,6 @@ public class ViewAndAdd extends Application {
         }
     }
 
-    // Show alert method
     private void showAlert(Alert.AlertType type, String title, String content) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
@@ -249,12 +239,10 @@ public class ViewAndAdd extends Application {
         alert.showAndWait();
     }
 
-    // Main class to run the program
     public static void main(String[] args) {
         launch(args);
     }
 
-    // Car class representing a car in the store
     public class CarTemp {
         private String id;
         private String name;
@@ -264,8 +252,7 @@ public class ViewAndAdd extends Application {
         private String year;
         private String price;
         private String status;
-    
-        // Constructor nhận 7 tham số
+
         public CarTemp(String id, String name, String licensePlate, String brand, String type, String year, String price, String status) {
             this.id = id;
             this.name = name;
@@ -276,38 +263,38 @@ public class ViewAndAdd extends Application {
             this.price = price;
             this.status = status;
         }
-    
-        // Property methods cho TableView binding
+
+        // Property methods for TableView binding
         public javafx.beans.property.SimpleStringProperty idProperty() {
             return new javafx.beans.property.SimpleStringProperty(id);
         }
-    
+
         public javafx.beans.property.SimpleStringProperty nameProperty() {
             return new javafx.beans.property.SimpleStringProperty(name);
         }
-    
+
         public javafx.beans.property.SimpleStringProperty licensePlateProperty() {
             return new javafx.beans.property.SimpleStringProperty(licensePlate);
         }
-    
+
         public javafx.beans.property.SimpleStringProperty brandProperty() {
             return new javafx.beans.property.SimpleStringProperty(brand);
         }
-    
+
         public javafx.beans.property.SimpleStringProperty typeProperty() {
             return new javafx.beans.property.SimpleStringProperty(type);
         }
-    
+
         public javafx.beans.property.SimpleStringProperty yearProperty() {
             return new javafx.beans.property.SimpleStringProperty(year);
         }
-    
+
         public javafx.beans.property.SimpleStringProperty priceProperty() {
             return new javafx.beans.property.SimpleStringProperty(price);
         }
-    
+
         public javafx.beans.property.SimpleStringProperty statusProperty() {
             return new javafx.beans.property.SimpleStringProperty(status);
         }
     }
-}        
+}

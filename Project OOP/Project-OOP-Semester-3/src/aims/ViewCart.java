@@ -3,6 +3,7 @@ package aims;
 import aims.car.Car;
 import aims.users.Customer;
 import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -48,31 +49,31 @@ public class ViewCart extends Application {
 
         // Define Table Columns
         TableColumn<Car, String> colID = new TableColumn<>("ID");
-        colID.setCellValueFactory(cellData -> cellData.getValue().carID);
+        colID.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(tableView.getItems().indexOf(cellData.getValue()) + 1)));
         colID.setPrefWidth(36.67);
 
         TableColumn<Car, String> colName = new TableColumn<>("Car Name");
-        colName.setCellValueFactory(cellData -> cellData.getValue().name);
+        colName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         colName.setPrefWidth(114.67);
 
         TableColumn<Car, String> colLicensePlate = new TableColumn<>("License Plate");
-        colLicensePlate.setCellValueFactory(cellData -> cellData.getValue().licensePlate);
+        colLicensePlate.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLicensePlate()));
         colLicensePlate.setPrefWidth(96.67);
 
         TableColumn<Car, String> colBrand = new TableColumn<>("Brand");
-        colBrand.setCellValueFactory(cellData -> cellData.getValue().brand);
+        colBrand.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBrand()));
         colBrand.setPrefWidth(75.33);
 
         TableColumn<Car, String> colType = new TableColumn<>("Type");
-        colType.setCellValueFactory(cellData -> cellData.getValue().type);
+        colType.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getType()));
         colType.setPrefWidth(71.33);
 
-        TableColumn<Car, String> colYear = new TableColumn<>("Manufactoring Year");
-        colYear.setCellValueFactory(cellData -> Integer.toString(cellData.getValue().manufacturingYear));
+        TableColumn<Car, String> colYear = new TableColumn<>("Manufacturing Year");
+        colYear.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getManufacturingYear())));
         colYear.setPrefWidth(120.67);
 
         TableColumn<Car, String> colPrice = new TableColumn<>("Price");
-        colPrice.setCellValueFactory(cellData -> Float.toString(cellData.getValue().rentalPrice) );
+        colPrice.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getRentalPrice())));
         colPrice.setPrefWidth(78.67);
 
         tableView.getColumns().addAll(colID, colName, colLicensePlate, colBrand, colType, colYear, colPrice);
@@ -137,17 +138,20 @@ public class ViewCart extends Application {
         ObservableList<Car> data = tableView.getItems();
         Car carToRemove = null;
 
-        // Find the car to remove from the cart
-        for (Car car : data) {
-            if (car.getLicensePlate().equals(carID)) {
-                carToRemove = car;
-                break;
+        try {
+            int index = Integer.parseInt(carID) - 1; // Convert to zero-based index
+            if (index >= 0 && index < data.size()) {
+                carToRemove = data.get(index);
             }
+        } catch (NumberFormatException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Invalid ID format. Please enter a valid number.");
+            return;
         }
 
         if (carToRemove != null) {
             data.remove(carToRemove);
             updateCustomerCartFile(data);  // Update the cart file after removing the car
+            updateCarStatusInFile(carToRemove.getLicensePlate(), "available"); // Update the status in Car.csv
             showAlert(Alert.AlertType.INFORMATION, "Success", "Car removed from your cart.");
         } else {
             showAlert(Alert.AlertType.ERROR, "Error", "Car ID not found in your cart.");
@@ -156,7 +160,7 @@ public class ViewCart extends Application {
 
     // Update the customer's cart file
     private void updateCustomerCartFile(ObservableList<Car> data) {
-        String fileName = "Project-OOP-Semester-3\\src\\aims\\Customer_" + username + ".csv";
+        String fileName = "Customer_" + username + ".csv";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
             for (Car car : data) {
                 writer.write(String.format("%s,%s,%s,%s,%d,%.2f%n",
@@ -165,6 +169,32 @@ public class ViewCart extends Application {
             }
         } catch (IOException e) {
             System.out.println("Error saving updated cart: " + e.getMessage());
+        }
+    }
+
+    // Update the status of the car in Car.csv
+    private void updateCarStatusInFile(String licensePlate, String status) {
+        File carFile = new File("Project-OOP-Semester-3\\src\\aims\\Car.csv");
+        File tempFile = new File("Project-OOP-Semester-3\\src\\aims\\Car_temp.csv");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(carFile));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] attributes = line.split(",");
+                if (attributes.length == 7 && attributes[1].equals(licensePlate)) {
+                    attributes[6] = status; // Update the status to "available"
+                }
+                writer.write(String.join(",", attributes) + System.lineSeparator());
+            }
+        } catch (IOException e) {
+            System.out.println("Error updating car status: " + e.getMessage());
+        }
+
+        // Replace original file with the updated file
+        if (!carFile.delete() || !tempFile.renameTo(carFile)) {
+            System.out.println("Error replacing car file.");
         }
     }
 

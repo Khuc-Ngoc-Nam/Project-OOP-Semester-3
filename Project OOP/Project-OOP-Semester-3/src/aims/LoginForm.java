@@ -167,6 +167,7 @@ public class LoginForm extends Application {
 
         // Open the CusLogin stage
         CusLogin cusLogin = new CusLogin();
+        cusLogin.username =  usernameField.getText();
         Stage cusLoginStage = new Stage();
         cusLogin.start(cusLoginStage);
     }

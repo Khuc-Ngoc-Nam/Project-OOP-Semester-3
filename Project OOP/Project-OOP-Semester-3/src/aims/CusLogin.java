@@ -9,6 +9,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class CusLogin extends Application {
+    String username;
 
     @Override
     public void start(Stage primaryStage) {
@@ -53,6 +54,7 @@ public class CusLogin extends Application {
         // Set action for "View Cars" button to navigate to the ViewAndAdd screen
         viewCarsButton.setOnAction(e -> {
             ViewAndAdd viewAndAdd = new ViewAndAdd(primaryStage);  // Passing current stage to retain window context
+            viewAndAdd.username = username;
             Stage viewAndAddStage = new Stage();
             viewAndAdd.start(viewAndAddStage);  // Open the ViewAndAdd screen
             primaryStage.close();  // Close the current CusLogin screen
@@ -61,7 +63,7 @@ public class CusLogin extends Application {
         // Set action for "View Cart" button to navigate to the ViewCart screen
         viewCartButton.setOnAction(e -> {
             // Assuming the customer is already logged in, pass the username to load the customer's cart
-            ViewCart viewCart = new ViewCart(primaryStage, "customerUsername");  // Replace "customerUsername" with actual username
+            ViewCart viewCart = new ViewCart(primaryStage, username);  // Replace "customerUsername" with actual username
             Stage viewCartStage = new Stage();
             viewCart.start(viewCartStage);  // Open the ViewCart screen
             primaryStage.close();  // Close the current CusLogin screen
