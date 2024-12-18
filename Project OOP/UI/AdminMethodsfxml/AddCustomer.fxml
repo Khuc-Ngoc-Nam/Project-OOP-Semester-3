@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="206.0" layoutY="27.0" text="Add a Customer" textFill="#4316de">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+      <TextField layoutX="275.0" layoutY="77.0" />
+      <TextField layoutX="275.0" layoutY="125.0" />
+      <TextField layoutX="275.0" layoutY="167.0" />
+      <TextField layoutX="275.0" layoutY="209.0" />
+      <TextField layoutX="275.0" layoutY="250.0" />
+      <Button layoutX="36.0" layoutY="319.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="Back" />
+      <Button layoutX="454.0" layoutY="319.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" text="Add" />
+      <Label layoutX="199.0" layoutY="81.0" text="Username" />
+      <Label layoutX="201.0" layoutY="129.0" text="Password" />
+      <Label layoutX="210.0" layoutY="171.0" text="Name" />
+      <Label layoutX="185.0" layoutY="213.0" text="Phone Number" />
+      <Label layoutX="206.0" layoutY="254.0" text="ID Card" />
+   </children>
+</Pane>

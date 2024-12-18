@@ -1,0 +1,141 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "ViewCart",
+            "request": "launch",
+            "mainClass": "aims.ViewCart",
+            "projectName": "Project OOP_26088dd6"
+        },
+        {
+            "type": "java",
+            "name": "ViewAndAdd",
+            "request": "launch",
+            "mainClass": "aims.ViewAndAdd",
+            "projectName": "Project OOP_26088dd6"
+        },
+        {
+            "type": "java",
+            "name": "CusLogin",
+            "request": "launch",
+            "mainClass": "aims.CusLogin",
+            "projectName": "Project OOP_26088dd6"
+        },
+        {
+            "type": "java",
+            "name": "DeleteOwnerCar",
+            "request": "launch",
+            "mainClass": "aims.DeleteOwnerCar",
+            "projectName": "Project OOP_26088dd6"
+        },
+        {
+            "type": "java",
+            "name": "AddCar",
+            "request": "launch",
+            "mainClass": "aims.AddCar",
+            "projectName": "Project OOP_26088dd6"
+        },
+        {
+            "type": "java",
+            "name": "ViewOwnerCar",
+            "request": "launch",
+            "mainClass": "aims.ViewOwnerCar",
+            "projectName": "Project OOP_26088dd6"
+        },
+        {
+            "type": "java",
+            "name": "CarOwnerOption",
+            "request": "launch",
+            "mainClass": "aims.CarOwnerOption",
+            "projectName": "Project OOP_26088dd6"
+        },
+        {
+            "type": "java",
+            "name": "CarOwnerApp",
+            "request": "launch",
+            "mainClass": "aims.AdminMethods.CarOwnerApp",
+            "projectName": "Project OOP_26088dd6"
+        },
+        {
+            "type": "java",
+            "name": "DeleteCustomer",
+            "request": "launch",
+            "mainClass": "aims.DeleteCustomer",
+            "projectName": "Project OOP_26088dd6"
+        },
+        {
+            "type": "java",
+            "name": "AddCustomer",
+            "request": "launch",
+            "mainClass": "aims.AddCustomer",
+            "projectName": "Project OOP_26088dd6"
+        },
+        {
+            "type": "java",
+            "name": "DeleteCarOwner",
+            "request": "launch",
+            "mainClass": "aims.DeleteCarOwner",
+            "projectName": "Project OOP_26088dd6"
+        },
+        {
+            "type": "java",
+            "name": "CreateCarOwner",
+            "request": "launch",
+            "mainClass": "aims.CreateCarOwner",
+            "projectName": "Project OOP_26088dd6"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "AdminViewOwnerList",
+            "request": "launch",
+            "mainClass": "aims.AdminViewOwnerList",
+            "projectName": "Project OOP_26088dd6",
+            "vmArgs": "-XX:MaxJavaStackTraceDepth=10000"
+        },
+        {
+            "type": "java",
+            "name": "Aims",
+            "request": "launch",
+            "mainClass": "aims.Aims",
+            "projectName": "Project OOP_26088dd6"
+        },
+        {
+            "type": "java",
+            "name": "CarOwnerApp",
+            "request": "launch",
+            "mainClass": "aims.CarOwnerApp",
+            "projectName": "Project OOP_26088dd6"
+        },
+        {
+            "type": "java",
+            "name": "LoginForm",
+            "request": "launch",
+            "mainClass": "aims.LoginForm",
+            "projectName": "Project OOP_26088dd6"
+        },
+        {
+            "type": "java",
+            "name": "Car",
+            "request": "launch",
+            "mainClass": "aims.car.Car",
+            "projectName": "Project OOP_26088dd6"
+        },
+        {
+            "type": "java",
+            "name": "Cart",
+            "request": "launch",
+            "mainClass": "aims.cart.Cart",
+            "projectName": "Project OOP_26088dd6"
+        }
+    ]
+}
